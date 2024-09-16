@@ -1,3 +1,4 @@
+import os
 import mysql.connector
 
 mydata = mysql.connector.connect(
@@ -7,7 +8,14 @@ mydata = mysql.connector.connect(
     database="bank"
 )
 cursor = mydata.cursor()
+def navbar(title):
+    print("------------------------------------------------")
+    print(f"             {title}                           ")
+    print("------------------------------------------------")
+
+
 def admin():
+    navbar("ADMIN LOGIN")
     ID = input("Enter the id:")
     password = input("Password:")
     if(ID == "admin" and password == "admin123"):
@@ -18,18 +26,24 @@ def admin():
 
 
 def adminlist():
+    os.system('cls')
+    navbar("NAMASTE ADMIN")
     print("1.New account")
     print("2.Deposit")
     print("3.Delete account")
     print("4.Exit")
     choice = int(input("Enter the choices:"))
-    match choice:
+    while(True):
+     match choice:
        case 1:
         new_account()
+        break
        case 2:
         deposit()
+        break
        case 3:
         delete()
+        break
        case 4:
         exit(0)
        case _:
@@ -85,7 +99,9 @@ def delete():
      print("No given account.")
 
 def user():
+    os.system('cls')
     acc_number = input("Enter your account number:")
+    navbar("WELCOME USER")
     select_query = "select * from DETAILS where account_number = %s"
     values = (acc_number,)
     cursor.execute(select_query,values)
@@ -161,12 +177,14 @@ def send(sender_Account):
         print("Send unsucessfull.")
 
 
-#  main  
+#  main
+navbar("BANKING MANAGEMENT SYSTEM")  
 print("1.Admin")
 print("2.User")
 print("3.Exit")
 choices = int(input("Enter the choices:"))
-match choices:
+while(True): 
+ match choices:
   case 1:
    admin()
 
